@@ -59,22 +59,27 @@ local function GeneratePriorityUpgrades()
 end
 
 ModUtil.WrapBaseFunction("GetPriorityDependentTraits", function( baseFunc, lootData )
-    lootData.LinkedUpgrades = EveryBoonInOne.ConcatLinkedUpgrades
-    allPriorityDependentTraits = baseFunc(lootData)
-    if #allPriorityDependentTraits > 1 then
-        return {
-            GetRandomValue(allPriorityDependentTraits)
-        }
+    if loot.GodLoot then
+        lootData.LinkedUpgrades = EveryBoonInOne.ConcatLinkedUpgrades
+        allPriorityDependentTraits = baseFunc(lootData)
+        if #allPriorityDependentTraits > 1 then
+            return {
+                GetRandomValue(allPriorityDependentTraits)
+            }
+        else
+            return allPriorityDependentTraits
+        end
     else
-        return allPriorityDependentTraits
+        return baseFunc(lootData)
     end
+
 end, EveryBoonInOne)
 
-ModUtil.WrapBaseFunction("SetTraitsOnLoot", function( baseFunc, loot )
+ModUtil.WrapBaseFunction("SetTraitsOnLoot", function( baseFunc, loot, args )
     if loot.GodLoot then
         loot.PriorityUpgrades = GeneratePriorityUpgrades()
     end
-    baseFunc(loot)
+    baseFunc(loot, args)
 end, EveryBoonInOne)
 
 ModUtil.WrapBaseFunction("GetEligibleUpgrades", function( baseFunc, upgradeOptions, lootData, upgradeChoiceData )
