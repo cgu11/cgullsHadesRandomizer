@@ -1,6 +1,3 @@
-[submodule "ModConfigMenu"]
-	path = ModConfigMenu
-	url = https://github.com/parasHadesMods/ModConfigMenu
 [submodule "sgg-mod-modutil"]
 	path = sgg-mod-modutil
 	url = https://github.com/SGG-Modding/sgg-mod-modutil.git
